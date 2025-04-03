@@ -1,0 +1,158 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\eventease.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\eventease.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\models\\venue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\models\\venue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|c:\\users\\tayle_6qeyl1g\\source\\repos\\eventease\\eventease\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0155E1C4-2D67-4A0F-8F43-7D6B29CD0CAB}|EventEase\\EventEase.csproj|solutionrelative:eventease\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EventsController.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Controllers\\EventsController.cs",
+              "RelativeDocumentMoniker": "EventEase\\Controllers\\EventsController.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Controllers\\EventsController.cs",
+              "RelativeToolTip": "EventEase\\Controllers\\EventsController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T17:59:39.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "EventEase\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "EventEase\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T17:59:33.33Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Event.cs",
+              "RelativeDocumentMoniker": "EventEase\\Models\\Event.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Event.cs",
+              "RelativeToolTip": "EventEase\\Models\\Event.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T17:59:31.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Venue.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Venue.cs",
+              "RelativeDocumentMoniker": "EventEase\\Models\\Venue.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Venue.cs",
+              "RelativeToolTip": "EventEase\\Models\\Venue.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T17:59:27.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EventEase.csproj",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\EventEase.csproj",
+              "RelativeDocumentMoniker": "EventEase\\EventEase.csproj",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\EventEase.csproj",
+              "RelativeToolTip": "EventEase\\EventEase.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-10T17:04:48.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\appsettings.json",
+              "RelativeDocumentMoniker": "EventEase\\appsettings.json",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\appsettings.json",
+              "RelativeToolTip": "EventEase\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-10T17:02:24.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Booking.cs",
+              "RelativeDocumentMoniker": "EventEase\\Models\\Booking.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Models\\Booking.cs",
+              "RelativeToolTip": "EventEase\\Models\\Booking.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAEwAcAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T16:53:10.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Program.cs",
+              "RelativeDocumentMoniker": "EventEase\\Program.cs",
+              "ToolTip": "C:\\Users\\tayle_6qeyl1g\\source\\repos\\EventEase\\EventEase\\Program.cs",
+              "RelativeToolTip": "EventEase\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T16:22:31.06Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
