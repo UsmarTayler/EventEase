@@ -27,9 +27,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Set up default routing
+// Set up default routing (Home page opens first)
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Venues}/{action=Index}/{id?}"); // Changed default controller to Venues
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
