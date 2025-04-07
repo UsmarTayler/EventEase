@@ -1,7 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Bookings";
+﻿@model IEnumerable<EventEase.Models.Booking>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout
+    ViewData["Title"] = "Bookings List"; // Set the page title
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bookings Page is here</h1>
-    </div>
+<h2>Bookings</h2>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Venue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.EventName) <!-- Changed from EventId to EventName -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Venue.VenueName) <!-- Changed from VenueId to Venue Name -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.BookingId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.BookingId" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.BookingId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

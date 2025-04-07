@@ -1,0 +1,33 @@
+﻿[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult>
+    Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event eventItem)
+    {
+    if (!ModelState.IsValid)
+    {
+    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+    {
+    Console.WriteLine(error.ErrorMessage); // Debug output to console
+    }
+
+    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
+    return View(eventItem);
+    }
+
+    try
+    {
+    _context.Add(eventItem);
+    await _context.SaveChangesAsync();
+    TempData["Message"] = "Event created successfully!";
+    return RedirectToAction(nameof(Index));
+    }
+    catch (Exception ex)
+    {
+    Console.WriteLine($"Error: {ex.Message}");
+    ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
+    }
+
+    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
+    return View(eventItem);
+    }
+
