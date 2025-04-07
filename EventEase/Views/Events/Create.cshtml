@@ -1,33 +1,44 @@
-﻿[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-    Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event eventItem)
-    {
-    if (!ModelState.IsValid)
-    {
-    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-    {
-    Console.WriteLine(error.ErrorMessage); // Debug output to console
-    }
+﻿@model EventEase.Models.Event
 
-    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-    return View(eventItem);
-    }
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create Event";
+}
 
-    try
-    {
-    _context.Add(eventItem);
-    await _context.SaveChangesAsync();
-    TempData["Message"] = "Event created successfully!";
-    return RedirectToAction(nameof(Index));
-    }
-    catch (Exception ex)
-    {
-    Console.WriteLine($"Error: {ex.Message}");
-    ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
-    }
+<h2>Create Event</h2>
 
-    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-    return View(eventItem);
-    }
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+    <div class="form-group">
+        <label asp-for="EventName" class="control-label"></label>
+        <input asp-for="EventName" class="form-control" />
+        <span asp-validation-for="EventName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventDate" class="control-label"></label>
+        <input asp-for="EventDate" class="form-control" type="date" />
+        <span asp-validation-for="EventDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VenueId" class="control-label"></label>
+        <select asp-for="VenueId" class="form-control" asp-items="@(ViewData["VenueId"] as SelectList)"></select>
+        <span asp-validation-for="VenueId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

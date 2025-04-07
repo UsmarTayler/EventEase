@@ -20,8 +20,8 @@ namespace EventEase.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            var events = await _context.Events.Include(e => e.Venue).ToListAsync();
-            return View(events);
+            var eventEaseDbContext = _context.Events.Include(e => e.Venue);
+            return View(await eventEaseDbContext.ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -32,57 +32,70 @@ namespace EventEase.Controllers
                 return NotFound();
             }
 
-            var eventItem = await _context.Events
+            var @event = await _context.Events
                 .Include(e => e.Venue)
-                .FirstOrDefaultAsync(e => e.EventId == id);
-
-            if (eventItem == null)
+                .FirstOrDefaultAsync(m => m.EventId == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(eventItem);
+            return View(@event);
         }
 
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName");
+            // Fetch venues from the database and populate the dropdown
+            var venues = _context.Venues.ToList();
+            foreach (var venue in venues)
+            {
+                Console.WriteLine($"VenueId: {venue.VenueId}, VenueName: {venue.VenueName}");
+            }
+            ViewData["VenueId"] = new SelectList(venues, "VenueId", "VenueName"); // Dropdown setup
             return View();
         }
 
-        // POST: Events/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event eventItem)
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event @event)
+{
+    // Debug: Log all submitted values for troubleshooting
+    Console.WriteLine($"EventName: {@event.EventName}, EventDate: {@event.EventDate}, Description: {@event.Description}, VenueId: {@event.VenueId}");
+
+    // Step 1: Validate the ModelState
+    if (ModelState.IsValid)
+    {
+        try
         {
-            if (!ModelState.IsValid)
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage); // Debug output to console
-                }
-
-                ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-                return View(eventItem);
-            }
-
-            try
-            {
-                _context.Add(eventItem);
-                await _context.SaveChangesAsync();
-                TempData["Message"] = "Event created successfully!";
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
-            }
-
-            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-            return View(eventItem);
+            // Step 2: Add the event to the database and log debug information
+            _context.Add(@event);
+            Console.WriteLine($"Saving Event: {@event.EventName}, VenueId: {@event.VenueId}");
+            await _context.SaveChangesAsync();
+            Console.WriteLine("Event saved successfully.");
+            return RedirectToAction(nameof(Index)); // Redirect to Index on success
         }
+        catch (Exception ex)
+        {
+            // Step 3: Handle database-related exceptions
+            Console.WriteLine($"Database Save Error: {ex.Message}");
+            ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
+        }
+    }
+    else
+    {
+        // Step 4: Log validation errors for debugging purposes
+        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+        {
+            Console.WriteLine($"Validation Error: {error.ErrorMessage}");
+        }
+    }
+
+    // Step 5: Ensure dropdown retains selected value on failure
+    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId); // Using descriptive names (VenueName)
+    return View(@event); // Return the view with validation and error messages
+}
+
 
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -92,22 +105,21 @@ namespace EventEase.Controllers
                 return NotFound();
             }
 
-            var eventItem = await _context.Events.FindAsync(id);
-            if (eventItem == null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
-
-            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-            return View(eventItem);
+            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueId", @event.VenueId);
+            return View(@event);
         }
 
         // POST: Events/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,EventName,EventDate,Description,VenueId")] Event eventItem)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,EventName,EventDate,Description,VenueId")] Event @event)
         {
-            if (id != eventItem.EventId)
+            if (id != @event.EventId)
             {
                 return NotFound();
             }
@@ -116,10 +128,8 @@ namespace EventEase.Controllers
             {
                 try
                 {
-                    _context.Update(eventItem);
+                    _context.Update(@event);
                     await _context.SaveChangesAsync();
-                    TempData["Message"] = "Event updated successfully!";
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,14 +142,10 @@ namespace EventEase.Controllers
                         throw;
                     }
                 }
-                catch
-                {
-                    ModelState.AddModelError("", "An error occurred while updating the event. Please try again.");
-                }
+                return RedirectToAction(nameof(Index));
             }
-
-            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", eventItem.VenueId);
-            return View(eventItem);
+            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueId", @event.VenueId);
+            return View(@event);
         }
 
         // GET: Events/Delete/5
@@ -150,16 +156,15 @@ namespace EventEase.Controllers
                 return NotFound();
             }
 
-            var eventItem = await _context.Events
+            var @event = await _context.Events
                 .Include(e => e.Venue)
-                .FirstOrDefaultAsync(e => e.EventId == id);
-
-            if (eventItem == null)
+                .FirstOrDefaultAsync(m => m.EventId == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(eventItem);
+            return View(@event);
         }
 
         // POST: Events/Delete/5
@@ -167,22 +172,19 @@ namespace EventEase.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eventItem = await _context.Events.FindAsync(id);
-            if (eventItem != null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event != null)
             {
-                try
-                {
-                    _context.Events.Remove(eventItem);
-                    await _context.SaveChangesAsync();
-                    TempData["Message"] = "Event deleted successfully!";
-                }
-                catch
-                {
-                    ModelState.AddModelError("", "An error occurred while deleting the event. Please try again.");
-                }
+                _context.Events.Remove(@event);
             }
 
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool EventExists(int id)
+        {
+            return _context.Events.Any(e => e.EventId == id);
         }
     }
 }
