@@ -1,29 +1,22 @@
 ﻿@model IEnumerable<EventEase.Models.Venue>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the shared layout
-    ViewData["Title"] = "Venues List"; // Set the page title
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Venues List";
 }
 
 <h2>Venues</h2>
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VenueName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.VenueName)</th>
+            <th>@Html.DisplayNameFor(model => model.Location)</th>
+            <th>@Html.DisplayNameFor(model => model.Capacity)</th>
+            <th>Image</th>
             <th></th>
         </tr>
     </thead>
@@ -31,17 +24,24 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.VenueName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                <td>@Html.DisplayFor(modelItem => item.Capacity)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VenueName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <div style="text-align: center;">
+                            <img src="@item.ImageUrl" alt="Venue image" width="120" height="80" style="object-fit: cover; border-radius: 6px;" />
+                            <br />
+                            <a href="@item.ImageUrl" target="_blank" style="font-size: 12px; display: inline-block; word-break: break-all;">
+                                @item.ImageUrl
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.VenueId" class="btn btn-warning btn-sm">Edit</a>
@@ -52,4 +52,5 @@
         }
     </tbody>
 </table>
+
 

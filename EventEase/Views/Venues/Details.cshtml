@@ -1,51 +1,28 @@
 ﻿@model EventEase.Models.Venue
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Venue Details";
 }
 
-<!DOCTYPE html>
+<h2>Venue Details</h2>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.VenueName)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.VenueName)</dd>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Location)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.Location)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Capacity)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.Capacity)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.ImageUrl)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.ImageUrl)</dd>
+</dl>
 
 <div>
-    <h4>Venue</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VenueName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VenueName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Capacity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Capacity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.VenueId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.VenueId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-</body>
-</html>
+

@@ -1,10 +1,12 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using EventEase.Data;
+using EventEase.Services; // 👈 Make sure this matches your namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<BlobService>(); // 👈 Register BlobService
 
 // Configure Entity Framework Core with SQL Server
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -27,7 +29,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Set up default routing (Home page opens first)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

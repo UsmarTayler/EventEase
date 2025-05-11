@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using EventEase.Data;
 using EventEase.Models;
+using EventEase.Services; // 👈 Needed for BlobService
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,15 +30,11 @@ namespace EventEase.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venue = await _context.Venues.FirstOrDefaultAsync(m => m.VenueId == id);
             if (venue == null)
-            {
                 return NotFound();
-            }
 
             return View(venue);
         }
@@ -48,15 +48,26 @@ namespace EventEase.Controllers
         // POST: Venues/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VenueId,VenueName,Location,Capacity,ImageUrl")] Venue venue)
+        public async Task<IActionResult> Create(
+            [Bind("VenueId,VenueName,Location,Capacity")] Venue venue,
+            IFormFile imageFile,
+            [FromServices] BlobService blobService)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    using var stream = imageFile.OpenReadStream();
+                    venue.ImageUrl = await blobService.UploadFileAsync(stream, fileName);
+                }
+
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "Venue created successfully!";
                 return RedirectToAction(nameof(Index));
             }
+
             return View(venue);
         }
 
@@ -64,27 +75,24 @@ namespace EventEase.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venue = await _context.Venues.FindAsync(id);
             if (venue == null)
-            {
                 return NotFound();
-            }
+
             return View(venue);
         }
 
         // POST: Venues/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VenueId,VenueName,Location,Capacity,ImageUrl")] Venue venue)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("VenueId,VenueName,Location,Capacity,ImageUrl")] Venue venue)
         {
             if (id != venue.VenueId)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -97,16 +105,14 @@ namespace EventEase.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!VenueExists(venue.VenueId))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(venue);
         }
 
@@ -114,15 +120,11 @@ namespace EventEase.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venue = await _context.Venues.FirstOrDefaultAsync(m => m.VenueId == id);
             if (venue == null)
-            {
                 return NotFound();
-            }
 
             return View(venue);
         }
@@ -134,9 +136,7 @@ namespace EventEase.Controllers
         {
             var venue = await _context.Venues.FindAsync(id);
             if (venue != null)
-            {
                 _context.Venues.Remove(venue);
-            }
 
             await _context.SaveChangesAsync();
             TempData["Message"] = "Venue deleted successfully!";
@@ -149,3 +149,4 @@ namespace EventEase.Controllers
         }
     }
 }
+
