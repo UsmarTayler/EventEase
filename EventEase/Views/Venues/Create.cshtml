@@ -8,31 +8,36 @@
 <h2>Create Venue</h2>
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="form-group">
         <label asp-for="VenueName" class="control-label"></label>
         <input asp-for="VenueName" class="form-control" />
         <span asp-validation-for="VenueName" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Location" class="control-label"></label>
         <input asp-for="Location" class="form-control" />
         <span asp-validation-for="Location" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Capacity" class="control-label"></label>
         <input asp-for="Capacity" class="form-control" type="number" min="1" />
         <span asp-validation-for="Capacity" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="ImageUrl" class="control-label"></label>
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

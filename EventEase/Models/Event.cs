@@ -6,17 +6,20 @@ namespace EventEase.Models
     public class Event
     {
         public int EventId { get; set; }
-        public required string EventName { get; set; }
+
+        [Required(ErrorMessage = "Event name is required")]
+        public string EventName { get; set; }
+
+        [Required(ErrorMessage = "Event date is required")]
+        [DataType(DataType.Date)]
         public DateTime EventDate { get; set; }
-        public required string Description { get; set; }
-        
-        public int? VenueId { get; set; } // Nullable foreign key
+
+        [Required(ErrorMessage = "Description is required")]
+        public string Description { get; set; }
+
+        public int? VenueId { get; set; }
+
         [ForeignKey("VenueId")]
-        public Venue Venue { get; set; } // Leave this without validation attributes
-
-
-
-
+        public Venue Venue { get; set; }
     }
 }
-
