@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventEase.Models
@@ -17,9 +18,13 @@ namespace EventEase.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        public int? VenueId { get; set; }
+        [Required(ErrorMessage = "Please select a venue")]
+        public int VenueId { get; set; }
+
 
         [ForeignKey("VenueId")]
+        [ValidateNever] // <-- ADD THIS LINE
         public Venue Venue { get; set; }
+
     }
 }

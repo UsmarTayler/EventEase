@@ -57,44 +57,52 @@ namespace EventEase.Controllers
         }
 
         [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event @event)
-{
-    // Debug: Log all submitted values for troubleshooting
-    Console.WriteLine($"EventName: {@event.EventName}, EventDate: {@event.EventDate}, Description: {@event.Description}, VenueId: {@event.VenueId}");
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event @event)
+        {
+            // Debug: Log submitted values
+            Console.WriteLine("== SUBMITTED FORM DATA ==");
+            Console.WriteLine($"EventName: {@event.EventName}");
+            Console.WriteLine($"EventDate: {@event.EventDate}");
+            Console.WriteLine($"Description: {@event.Description}");
+            Console.WriteLine($"VenueId: {@event.VenueId}");
+            Console.WriteLine("== MODEL STATE CHECK ==");
 
-    // Step 1: Validate the ModelState
-    if (ModelState.IsValid)
-    {
-        try
-        {
-            // Step 2: Add the event to the database and log debug information
-            _context.Add(@event);
-            Console.WriteLine($"Saving Event: {@event.EventName}, VenueId: {@event.VenueId}");
-            await _context.SaveChangesAsync();
-            Console.WriteLine("Event saved successfully.");
-            return RedirectToAction(nameof(Index)); // Redirect to Index on success
-        }
-        catch (Exception ex)
-        {
-            // Step 3: Handle database-related exceptions
-            Console.WriteLine($"Database Save Error: {ex.Message}");
-            ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
-        }
-    }
-    else
-    {
-        // Step 4: Log validation errors for debugging purposes
-        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-        {
-            Console.WriteLine($"Validation Error: {error.ErrorMessage}");
-        }
-    }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Add(@event);
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine("✅ Event saved successfully.");
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Database Save Error: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
+                }
+            }
+            else
+            {
+                // Detailed validation error logging
+                Console.WriteLine("❌ ModelState is invalid. Errors:");
+                foreach (var entry in ModelState)
+                {
+                    string key = entry.Key;
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        Console.WriteLine($"Field: {key} — Error: {error.ErrorMessage}");
+                    }
+                }
+            }
 
-    // Step 5: Ensure dropdown retains selected value on failure
-    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId); // Using descriptive names (VenueName)
-    return View(@event); // Return the view with validation and error messages
-}
+            // Repopulate dropdown in case of error
+            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId);
+            return View(@event);
+        }
+
+
 
 
         // GET: Events/Edit/5
