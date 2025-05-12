@@ -6,6 +6,7 @@
 }
 
 <h2>Edit Event</h2>
+
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="EventId" />
@@ -18,7 +19,10 @@
 
     <div class="form-group">
         <label asp-for="EventDate" class="control-label"></label>
-        <input asp-for="EventDate" type="date" class="form-control" />
+        <input type="datetime-local" class="form-control"
+               asp-for="EventDate"
+               value="@Model.EventDate.ToString("yyyy-MM-ddTHH:mm")" />
+
         <span asp-validation-for="EventDate" class="text-danger"></span>
     </div>
 

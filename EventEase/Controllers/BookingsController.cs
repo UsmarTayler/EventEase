@@ -48,16 +48,44 @@ namespace EventEase.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BookingId,EventId,VenueId,BookingDate")] Booking booking)
         {
+            var selectedEvent = await _context.Events
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.EventId == booking.EventId);
+
+            if (selectedEvent == null)
+            {
+                ModelState.AddModelError("", "Selected event does not exist.");
+            }
+            else
+            {
+                // ✅ Check if another booking exists on the same date and same venue
+                bool isDoubleBooked = await _context.Bookings
+                    .Include(b => b.Event)
+                    .AnyAsync(b =>
+                        b.VenueId == booking.VenueId &&
+                        b.Event.EventDate.Date == selectedEvent.EventDate.Date);
+
+                if (isDoubleBooked)
+                {
+                    ModelState.AddModelError("", "This venue is already booked on the selected date.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["EventId"] = new SelectList(_context.Events, "EventId", "EventId", booking.EventId);
             ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueId", booking.VenueId);
             return View(booking);
         }
+
+
+
+
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -96,6 +124,7 @@ namespace EventEase.Controllers
             ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueId", booking.VenueId);
             return View(booking);
         }
+
 
         public async Task<IActionResult> Delete(int? id)
         {

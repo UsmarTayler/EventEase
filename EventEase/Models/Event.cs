@@ -12,7 +12,7 @@ namespace EventEase.Models
         public string EventName { get; set; }
 
         [Required(ErrorMessage = "Event date is required")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)] // ✅ Change to DateTime if you plan to support time
         public DateTime EventDate { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
@@ -21,10 +21,12 @@ namespace EventEase.Models
         [Required(ErrorMessage = "Please select a venue")]
         public int VenueId { get; set; }
 
-
         [ForeignKey("VenueId")]
-        [ValidateNever] // <-- ADD THIS LINE
+        [ValidateNever]
         public Venue Venue { get; set; }
 
+        //  New image support
+        public string? ImageUrl { get; set; }
     }
 }
+
