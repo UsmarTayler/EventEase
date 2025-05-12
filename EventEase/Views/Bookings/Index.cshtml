@@ -1,46 +1,58 @@
 ﻿@model IEnumerable<EventEase.Models.Booking>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout
-    ViewData["Title"] = "Bookings List"; // Set the page title
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Bookings List";
 }
 
 <h2>Bookings</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<!-- 🔍 Search bar -->
+@using (Html.BeginForm("Index", "Bookings", FormMethod.Get))
+{
+    <div class="form-group mb-3">
+        <input type="text" name="searchTerm" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by Booking ID or Event Name" />
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Search</button>
+}
+
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<table class="table">
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Event)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Venue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingDate)
-            </th>
+            <th>Booking ID</th>
+            <th>Event</th>
+            <th>Event Date</th>
+            <th>Venue</th>
+            <th>Booking Date</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var booking in Model)
         {
             <tr>
+                <td>@booking.BookingId</td>
+                <td>@booking.Event?.EventName</td>
+                <td>@booking.Event?.EventDate.ToString("dd MMM yyyy HH:mm")</td>
+                <td>@booking.Venue?.VenueName</td>
+                <td>@booking.BookingDate.ToString("dd MMM yyyy HH:mm")</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Event.EventName) <!-- Changed from EventId to EventName -->
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Venue.VenueName) <!-- Changed from VenueId to Venue Name -->
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookingDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.BookingId" class="btn btn-warning btn-sm">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.BookingId" class="btn btn-info btn-sm">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.BookingId" class="btn btn-danger btn-sm">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@booking.BookingId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@booking.BookingId" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@booking.BookingId" class="btn btn-danger btn-sm">Delete</a>
                 </td>
             </tr>
         }

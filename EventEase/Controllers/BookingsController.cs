@@ -17,15 +17,26 @@ namespace EventEase.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var bookings = _context.Bookings
+            var bookingsQuery = _context.Bookings
                 .Include(b => b.Event)
                 .ThenInclude(e => e.Venue)
-                .Include(b => b.Venue);
+                .Include(b => b.Venue)
+                .AsQueryable();
 
-            return View(await bookings.ToListAsync());
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                bookingsQuery = bookingsQuery.Where(b =>
+                    b.BookingId.ToString().Contains(searchTerm) ||
+                    b.Event.EventName.Contains(searchTerm));
+            }
+
+            var bookings = await bookingsQuery.ToListAsync();
+            ViewData["CurrentFilter"] = searchTerm;
+            return View(bookings);
         }
+
 
         public async Task<IActionResult> Details(int? id)
         {
