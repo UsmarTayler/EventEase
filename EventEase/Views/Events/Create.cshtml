@@ -18,7 +18,9 @@
 
     <div class="form-group">
         <label asp-for="EventDate" class="control-label"></label>
-        <input asp-for="EventDate" type="datetime-local" class="form-control" />
+        <input type="datetime-local" class="form-control"
+               asp-for="EventDate"
+               value="@(Model?.EventDate.ToString("yyyy-MM-ddTHH:mm") ?? "")" />
         <span asp-validation-for="EventDate" class="text-danger"></span>
     </div>
 

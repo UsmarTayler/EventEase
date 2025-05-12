@@ -60,13 +60,11 @@ namespace EventEase.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EventId,EventName,EventDate,Description,VenueId")] Event @event)
         {
-            // Debug: Log submitted values
             Console.WriteLine("== SUBMITTED FORM DATA ==");
             Console.WriteLine($"EventName: {@event.EventName}");
             Console.WriteLine($"EventDate: {@event.EventDate}");
             Console.WriteLine($"Description: {@event.Description}");
             Console.WriteLine($"VenueId: {@event.VenueId}");
-            Console.WriteLine("== MODEL STATE CHECK ==");
 
             if (ModelState.IsValid)
             {
@@ -81,11 +79,13 @@ namespace EventEase.Controllers
                 {
                     Console.WriteLine($"❌ Database Save Error: {ex.Message}");
                     ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
+
+                    // 🛠 FIX: Repopulate dropdown even if SaveChanges fails
+                    ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId);
                 }
             }
             else
             {
-                // Detailed validation error logging
                 Console.WriteLine("❌ ModelState is invalid. Errors:");
                 foreach (var entry in ModelState)
                 {
@@ -95,10 +95,11 @@ namespace EventEase.Controllers
                         Console.WriteLine($"Field: {key} — Error: {error.ErrorMessage}");
                     }
                 }
+
+                // 🛠 FIX: Repopulate dropdown on model validation error
+                ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId);
             }
 
-            // Repopulate dropdown in case of error
-            ViewData["VenueId"] = new SelectList(_context.Venues, "VenueId", "VenueName", @event.VenueId);
             return View(@event);
         }
 
@@ -181,14 +182,25 @@ namespace EventEase.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @event = await _context.Events.FindAsync(id);
-            if (@event != null)
+            if (@event == null)
+                return NotFound();
+
+            // ❌ Check for existing bookings for this event
+            bool hasBookings = await _context.Bookings.AnyAsync(b => b.EventId == id);
+
+            if (hasBookings)
             {
-                _context.Events.Remove(@event);
+                TempData["ErrorMessage"] = "Cannot delete this event because it has existing bookings.";
+                return RedirectToAction(nameof(Index));
             }
 
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
+
+            TempData["Message"] = "Event deleted successfully!";
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool EventExists(int id)
         {

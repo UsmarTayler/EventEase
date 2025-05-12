@@ -13,8 +13,7 @@ namespace EventEase.Models
         [ValidateNever]
         public Event Event { get; set; }
 
-        [Required(ErrorMessage = "Venue selection is required")]
-        public int VenueId { get; set; }
+        public int VenueId { get; set; } // Auto-assigned from the selected event
 
         [ValidateNever]
         public Venue Venue { get; set; }
