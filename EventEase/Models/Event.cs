@@ -27,6 +27,10 @@ namespace EventEase.Models
 
         //  New image support
         public string? ImageUrl { get; set; }
+        public int? EventTypeId { get; set; }
+        [ForeignKey("EventTypeId")]
+        public EventType EventType { get; set; }
+
     }
 }
 
