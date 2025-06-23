@@ -20,7 +20,9 @@ namespace EventEase.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            var eventEaseDbContext = _context.Events.Include(e => e.Venue);
+            var eventEaseDbContext = _context.Events
+                .Include(e => e.Venue)
+                .Include(e => e.EventType); // ✅ Ensure EventType is loaded
             return View(await eventEaseDbContext.ToListAsync());
         }
 
@@ -34,6 +36,7 @@ namespace EventEase.Controllers
 
             var @event = await _context.Events
                 .Include(e => e.Venue)
+                .Include(e => e.EventType) // ✅ Ensure EventType is loaded
                 .FirstOrDefaultAsync(m => m.EventId == id);
             if (@event == null)
             {
@@ -67,7 +70,7 @@ namespace EventEase.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (Exception ex)
+                catch
                 {
                     ModelState.AddModelError("", "An error occurred while saving the event. Please try again.");
                 }
@@ -144,6 +147,7 @@ namespace EventEase.Controllers
 
             var @event = await _context.Events
                 .Include(e => e.Venue)
+                .Include(e => e.EventType) // ✅ Ensure EventType is loaded
                 .FirstOrDefaultAsync(m => m.EventId == id);
             if (@event == null)
             {
@@ -183,4 +187,3 @@ namespace EventEase.Controllers
         }
     }
 }
-
